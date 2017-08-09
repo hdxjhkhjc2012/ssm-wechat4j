@@ -7,7 +7,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.sword.wechat4j.message.CustomerMsg;
+import org.sword.wechat4j.token.TokenProxy;
+import org.sword.wechat4j.user.UserManager;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 
 @Controller
@@ -22,15 +29,37 @@ public class UserController {
 		List<User> list = userService.findAllUser();
 		model.addAttribute("users", list);
 		CustomerMsg customerMsg = new CustomerMsg("oTdG6w8e9UGe9fGk460ncF6CRk2c");
-		customerMsg.sendText("杨哥厉害了");
-		return "/user_list";
+		customerMsg.sendText("浩哥厉害了");
+		return "/user/user_list";
 	}
 
 	@RequestMapping("/click")
-	public String click(Model model) {
+	public String click(Model model) throws IOException {
+		String accessToken = TokenProxy.accessToken();
+		String strURL = "https://api.weixin.qq.com/cgi-bin/user/info?access_token="+accessToken+"&openid=oTdG6w8e9UGe9fGk460ncF6CRk2c&lang=zh_CN";
+		URL url = new URL(strURL);
+		HttpURLConnection httpConn = (HttpURLConnection)url.openConnection();
+		httpConn.setRequestMethod("GET");
+		httpConn.connect();
+
+		BufferedReader reader = new BufferedReader(new InputStreamReader(
+				httpConn.getInputStream(),"UTF-8"));
+		String line;
+		StringBuffer buffer = new StringBuffer();
+		while ((line = reader.readLine()) != null) {
+			buffer.append(line);
+		}
+		reader.close();
+		httpConn.disconnect();
+
+		System.out.println(buffer.toString());
+
 		List<User> list = userService.findAllUser();
+		UserManager userManager = new UserManager();
+		List<Object> userList = userManager.subscriberList();
+		System.out.print(userList);
 		model.addAttribute("users", list);
-		return "/user_list";
+		return "/user/user_list";
 	}
 	
 }
