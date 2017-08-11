@@ -6,10 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.sword.wechat4j.message.CustomerMsg;
 import org.sword.wechat4j.token.TokenProxy;
 import org.sword.wechat4j.user.UserManager;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -33,8 +37,9 @@ public class UserController {
 		return "/user/user_list";
 	}
 
-	@RequestMapping("/click")
-	public String click(Model model) throws IOException {
+	@RequestMapping(value = "/click", method = RequestMethod.POST,consumes = "application/json")
+	@ResponseBody
+	public String click( Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String accessToken = TokenProxy.accessToken();
 		String strURL = "https://api.weixin.qq.com/cgi-bin/user/info?access_token="+accessToken+"&openid=oTdG6w8e9UGe9fGk460ncF6CRk2c&lang=zh_CN";
 		URL url = new URL(strURL);

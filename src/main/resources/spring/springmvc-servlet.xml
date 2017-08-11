@@ -19,8 +19,12 @@
     <!-- 添加注解驱动 -->
     <mvc:annotation-driven />
     <!-- 静态资源处理 -->
-    <mvc:resources mapping="/**" location="/"/>
-    
+   <!-- <mvc:resources mapping="/**" location="/"/>-->
+    <mvc:resources mapping="/js/**"
+                   location="/WEB-INF/js/"/>
+    <mvc:resources mapping="/json/**"
+                   location="/WEB-INF/json/"/>
+    <mvc:default-servlet-handler />
     <mvc:view-controller path="/" view-name="redirect:/user/all"/>  
 
     <!-- FreeMarker视图解析器  -->
@@ -33,7 +37,8 @@
         </property>
         <property name="requestContextAttribute" value="request" />
     </bean>
-    
+
+
     <!-- freemarker的配置 -->  
     <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
         <property name="templateLoaderPath">
