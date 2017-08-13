@@ -24,6 +24,16 @@
                    location="/WEB-INF/js/"/>
     <mvc:resources mapping="/json/**"
                    location="/WEB-INF/json/"/>
+    <mvc:resources mapping="/css/**"
+                   location="/WEB-INF/css/"/>
+    <mvc:resources mapping="/assets/**"
+                   location="/WEB-INF/assets/"/>
+    <mvc:resources mapping="/front/**"
+                   location="/WEB-INF/front/"/>
+    <mvc:resources mapping="/Images/**"
+                   location="/WEB-INF/Images/"/>
+    <mvc:resources mapping="/layer/**"
+                   location="/WEB-INF/layer/"/>
     <mvc:default-servlet-handler />
     <mvc:view-controller path="/" view-name="redirect:/user/all"/>  
 
