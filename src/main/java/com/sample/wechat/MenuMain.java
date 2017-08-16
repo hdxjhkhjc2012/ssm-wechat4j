@@ -19,7 +19,7 @@ public class MenuMain {
 
         ViewButton vbt=new ViewButton();
         vbt.setUrl("http://www.baidu.com");
-        vbt.setName("百度");
+        vbt.setName("嗖嗖嗖");
         vbt.setType("view");
 
         JSONArray sub_button=new JSONArray();
